@@ -12,7 +12,7 @@ const { auth } = require("../middlewares/auth");
 router.post("/user/sendotp", sendOTP); // Corrected: OTP should be sent via POST
 router.post("/user/signup", signUp); // SignUp should be a POST request
 router.post("/user/login", login); // Login should be a POST request
-router.put("/user/changepassword", auth, changePassword); // Change password should be a PUT request with authentication
+router.put("/user/changepassword",changePassword); // Change password should be a PUT request with authentication
 
 // Export router
 module.exports = router;

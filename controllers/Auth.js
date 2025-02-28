@@ -124,7 +124,7 @@ exports.signUp = async (req, res) => {
             //OTP not found
             return res.status(400).json({
                 success: false,
-                message: "OTP Found",
+                message: "OTP NotFound",
             });
         } else if (otp !== recentOtp[0].otp.toString()) {   
             //Invalild Otp

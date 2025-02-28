@@ -12,7 +12,10 @@ const PORT = process.env.PORT || 4000;
 
 // Middleware (to parse JSON requests)
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // Frontend URL
+    credentials: true
+}));
 app.use(cookieParser());
 
 
