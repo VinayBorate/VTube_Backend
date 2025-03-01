@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
+const fileupload = require("express-fileupload");
 
 // Initialize express app
 const app = express();
@@ -10,28 +11,40 @@ const app = express();
 // Define PORT
 const PORT = process.env.PORT || 4000;
 
-// Middleware (to parse JSON requests)
+//******************* Middleware ************************
+
+// (to parse JSON requests)
 app.use(express.json());
 app.use(cors({
     origin: 'http://localhost:5173', // Frontend URL
     credentials: true
 }));
 app.use(cookieParser());
+app.use(fileupload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
 
 
 
 
-// Import routes
+//*********************Import routes*******************************
 const authRoutes = require("./routes/User"); // Added auth routes
 
-// Mount routes
+
+//**********************Mount routes*******************************
 app.use("/api/v1/auth", authRoutes); // Mounted auth routes
 
-// Connect to the database
+
+//*******************Connect to the database***********************
 const connectWithDb = require("./config/database");
 connectWithDb();
 
-// Default route
+//*******************Connect to the Colodunary**********************
+const cloudinary = require("./config/cloudinary");
+cloudinary.cloudinaryConnect();
+
+//Default route
 app.get("/", (req, res) => {
     res.send(`<h1>Hi, this is Vinay</h1>`);
 });

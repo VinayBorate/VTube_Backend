@@ -8,8 +8,11 @@ const videoSchema = new mongoose.Schema({
         description:{
             type:String,
         },
-        myvideo:{
+        videoURL:{
             type:String,
+        },
+        adminEmail:{
+           type:String,
         },
         videoComments:[
             {
