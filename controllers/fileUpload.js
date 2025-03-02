@@ -23,7 +23,7 @@ exports.videoUpload = async(req,res) => {
         const {videoTitle,description,adminEmail} = req.body;
         console.log(videoTitle,description,adminEmail);
 
-        const file = req.files.videoFile;
+        const file = req.files.videoFile;           //   key    use in  POSTMAN
         console.log(file);
 
         //validate
