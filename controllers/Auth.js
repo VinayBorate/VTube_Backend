@@ -314,3 +314,14 @@ exports.changePassword = async (req, res) => {
         });
     }
 };
+
+//logout
+
+exports.logOut = async (req,res) =>{
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: true,  // Use secure cookies in production
+        sameSite: "None"
+    });
+    res.status(200).json({ success: true, message: "Logged out successfully" });
+}

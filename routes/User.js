@@ -4,7 +4,7 @@ const router = express.Router();
 
 //***********************Import controllers*************************************
 
-const { sendOTP, signUp, login, changePassword } = require("../controllers/Auth");
+const { sendOTP, signUp, login, changePassword,logOut } = require("../controllers/Auth");
 const {videoUpload} = require("../controllers/fileUpload");
 const {getAllVideos} = require("../controllers/getVideos");
 
@@ -21,6 +21,7 @@ router.post("/user/login", login); // Login should be a POST request
 router.put("/user/changepassword",changePassword); // Change password should be a PUT request with authentication
 router.post("/user/videoupload",videoUpload);// Helps to upload the Video
 router.get("/user/getAllVideo",getAllVideos);
+router.get("/user/logout",logOut);
 
 // Export router
 module.exports = router;
