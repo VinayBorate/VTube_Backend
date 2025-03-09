@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
     downloadVideo: [
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:"Video"
+            ref:"Video",
         }
     ],
     image:{

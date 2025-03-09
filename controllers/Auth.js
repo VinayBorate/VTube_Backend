@@ -138,15 +138,15 @@ exports.signUp = async (req, res) => {
         const hashedPassword = await bcrypt.hash(createPassword, 10);
 
         //entry create in DB
-        const downloadDetail = await Video.create({
-            videoTitle: null,
-            description: null,
-            myvideo: null,
-            videoComments: null,
-            videoAdmin: null,
-            videoLikes: null,
-            videoUnlike: null,
-        });
+        // const downloadDetail = await Video.create({
+        //     videoTitle: null,
+        //     description: null,
+        //     myvideo: null,
+        //     videoComments: null,
+        //     videoAdmin: null,
+        //     videoLikes: null,
+        //     videoUnlike: null,
+        // });
 
         const user = await User.create({
             firstName,
@@ -154,7 +154,7 @@ exports.signUp = async (req, res) => {
             email,
             password: hashedPassword,
             accountType,
-            downloadVideo: downloadDetail._id,
+            downloadVideo: null,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}${lastName}`,
         });
 
