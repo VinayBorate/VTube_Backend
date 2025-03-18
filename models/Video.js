@@ -14,6 +14,9 @@ const videoSchema = new mongoose.Schema({
         adminEmail:{
            type:String,
         },
+        adminPic:{
+           type:String,
+        },
         videoComments:[
             {
                 type:mongoose.Schema.Types.ObjectId,

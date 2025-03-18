@@ -20,8 +20,8 @@ function isFileSupported(type,supportType){
 exports.videoUpload = async(req,res) => {
     try {
         //data fetch
-        const {videoTitle,description,adminEmail} = req.body;
-        console.log(videoTitle,description,adminEmail);
+        const {videoTitle,description,adminEmail,adminPic} = req.body;
+        console.log(videoTitle,description,adminEmail,adminPic);
 
         const file = req.files.videoFile;           //   key    use in  POSTMAN
         console.log(file);
@@ -48,7 +48,8 @@ exports.videoUpload = async(req,res) => {
             videoTitle,
             description,
             videoURL: response.secure_url,
-            adminEmail
+            adminEmail,
+            adminPic,
         });
 
         res.json({
