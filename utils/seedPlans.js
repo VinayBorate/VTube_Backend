@@ -1,9 +1,9 @@
 const Plan = require("../models/Plans");
 
 const plans = [
-  { name: "Bronze", amount: 10, features: ["Feature 1", "Limited access"] },
-  { name: "Silver", amount: 50, features: ["Feature 2", "Extended access"] },
-  { name: "Gold", amount: 100, features: ["24/7 support", "Unlimited access"] },
+  { name: "gold", amount: 100, features: ["24/7 support", "Unlimited access"] },
+  { name: "silver", amount: 50, features: ["Feature 2", "Extended access"] },
+  { name: "bronze", amount: 10, features: ["Feature 1", "Limited access"] },
 ];
 
 const seedPlans = async () => {
