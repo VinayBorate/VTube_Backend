@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const fileupload = require("express-fileupload");
+const seedPlans = require("./utils/seedPlans");
 
 // Initialize express app
 const app = express();
@@ -39,6 +40,9 @@ app.use("/api/v1/auth", authRoutes); // Mounted auth routes
 //*******************Connect to the database***********************
 const connectWithDb = require("./config/database");
 connectWithDb();
+    // Seed the database with plans after successful DB connection
+    seedPlans();
+
 
 //*******************Connect to the Colodunary**********************
 const cloudinary = require("./config/cloudinary");
