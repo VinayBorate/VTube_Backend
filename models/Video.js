@@ -11,6 +11,9 @@ const videoSchema = new mongoose.Schema({
         videoURL:{
             type:String,
         },
+         thumbnailURL:{
+            type:String,
+        },
         adminEmail:{
            type:String,
         },

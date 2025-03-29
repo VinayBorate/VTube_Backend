@@ -6,7 +6,7 @@ const router = express.Router();
 
 const { sendOTP, signUp, login, changePassword,logOut } = require("../controllers/Auth");
 const {videoUpload} = require("../controllers/fileUpload");
-const {getAllVideos} = require("../controllers/getVideos");
+const {getAllVideos,getVideoByID} = require("../controllers/getVideos");
 const orderRoutes = require("./orderRoutes"); 
 const {getallPlans} = require('../controllers/getallPlans');
 
@@ -26,6 +26,7 @@ router.post("/user/videoupload",videoUpload);// Helps to upload the Video
 router.get("/user/getAllVideo",getAllVideos);
 router.get("/user/logout",logOut);
 router.get("/user/getAllPlans",getallPlans);
+router.get("/user/getVideo/:videoId", getVideoByID);
 
 // Use order routes
 router.use(orderRoutes);
