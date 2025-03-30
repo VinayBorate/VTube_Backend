@@ -23,7 +23,7 @@ const videoSchema = new mongoose.Schema({
         videoComments:[
             {
                 type:mongoose.Schema.Types.ObjectId,
-                ref:"Comments"
+                ref:"Comment"
             }
         ],
         videoAdmin:{

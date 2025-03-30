@@ -9,6 +9,8 @@ const {videoUpload} = require("../controllers/fileUpload");
 const {getAllVideos,getVideoByID} = require("../controllers/getVideos");
 const orderRoutes = require("./orderRoutes"); 
 const {getallPlans} = require('../controllers/getallPlans');
+const {addComments} = require('../controllers/AddComments');
+const {getCommentsByVideoId} = require('../controllers/getComments');
 
 
 
@@ -27,6 +29,8 @@ router.get("/user/getAllVideo",getAllVideos);
 router.get("/user/logout",logOut);
 router.get("/user/getAllPlans",getallPlans);
 router.get("/user/getVideo/:videoId", getVideoByID);
+router.post("/video/:videoId/comment",addComments);
+router.get("/video/:videoId/comments",getCommentsByVideoId);
 
 // Use order routes
 router.use(orderRoutes);
