@@ -17,8 +17,8 @@ const PORT = process.env.PORT || 4000;
 // (to parse JSON requests)
 app.use(express.json());
 app.use(cors({
-    // origin: 'http://localhost:5173', // Frontend URL  
-    origin: 'https://vtubebyvinay.netlify.app',
+    // origin: 'http://localhost:5173', // Frontend URL  (Offline)
+    origin: 'https://vtubebyvinay.netlify.app', //Frontend URL (Deployed)
     credentials: true
 }));
 app.use(cookieParser());

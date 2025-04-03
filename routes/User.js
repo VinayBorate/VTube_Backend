@@ -11,6 +11,7 @@ const orderRoutes = require("./orderRoutes");
 const {getallPlans} = require('../controllers/getallPlans');
 const {addComments} = require('../controllers/AddComments');
 const {getCommentsByVideoId} = require('../controllers/getComments');
+const {getLike,LikeUnlikeVideo} = require('../controllers/LikeUnlike')
 
 
 
@@ -31,6 +32,8 @@ router.get("/user/getAllPlans",getallPlans);
 router.get("/user/getVideo/:videoId", getVideoByID);
 router.post("/video/:videoId/comment",addComments);
 router.get("/video/:videoId/comments",getCommentsByVideoId);
+router.get("/video/:videoId/likes",getLike);
+router.post("/video/:videoId/like",LikeUnlikeVideo);
 
 // Use order routes
 router.use(orderRoutes);
