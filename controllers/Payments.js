@@ -3,8 +3,8 @@ const crypto = require("crypto");
 const dotenv = require("dotenv");
 const User = require("../models/User");
 const PaymentRecord = require("../models/Paymentsrecord");
-require("dotenv").config();
-
+const mailSender = require("../utils/mailSender");
+const paymentEmailTemplate = require("../utils/paymentEmailTemplate");
 dotenv.config();
 
 // Initialize Razorpay
@@ -13,14 +13,26 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// Create an order
-exports.createOrder = async (req, res) => {
-  const {userId,amount} = req.body;
+// Send payment confirmation email
+async function sendPaymentEmail(email, razorpay_order_id, razorpay_payment_id, accountType) {
+  try {
+    const emailBody = paymentEmailTemplate(razorpay_order_id, razorpay_payment_id, accountType);
+    const mailResponse = await mailSender(email, "Payment Successful - VTube", emailBody);
+    console.log("Payment email sent:", mailResponse);
+  } catch (error) {
+    console.log("Error while sending payment email:", error);
+    throw error;
+  }
+}
 
-  const shortUserId = userId.substring(0, 8); //making UserId short as Razorpay do not support long string in recipt
+// Create Order
+exports.createOrder = async (req, res) => {
+  const { userId, amount } = req.body;
+
+  const shortUserId = userId.substring(0, 8);
 
   const options = {
-    amount: amount * 100, // Convert to smallest currency unit
+    amount: amount * 100,
     currency: "INR",
     receipt: `${shortUserId}${Date.now()}`,
     payment_capture: 1
@@ -28,21 +40,19 @@ exports.createOrder = async (req, res) => {
 
   try {
     const order = await razorpay.orders.create(options);
-    // res.json({ orderId: order.id });
     res.status(200).json({
-                     success:true,
-                     message: 'Your Order is Created',
-                     order,
-                 });
+      success: true,
+      message: 'Your Order is Created',
+      order,
+    });
   } catch (error) {
     res.status(500).json({ error: "Error While creating order" });
   }
 };
 
-
+// Validate Payment
 exports.validateOrder = async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, userId, accountType} =
-    req.body;
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature, userId, accountType } = req.body;
 
   const sha = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
   sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
@@ -53,7 +63,6 @@ exports.validateOrder = async (req, res) => {
   }
 
   try {
-    // Update User model account type
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { accountType: accountType },
@@ -64,7 +73,6 @@ exports.validateOrder = async (req, res) => {
       return res.status(404).json({ msg: "User not found" });
     }
 
-    // Create a payment record
     const paymentRecord = new PaymentRecord({
       userId,
       accountType,
@@ -72,6 +80,8 @@ exports.validateOrder = async (req, res) => {
       razorpay_payment_id
     });
     await paymentRecord.save();
+
+    await sendPaymentEmail(updatedUser.email, razorpay_order_id, razorpay_payment_id, accountType);
 
     res.status(200).json({
       success: true,
@@ -85,13 +95,3 @@ exports.validateOrder = async (req, res) => {
     res.status(500).json({ error: "Error updating user and payment record" });
   }
 };
-
-
-
-
-
-
-
-
-
-

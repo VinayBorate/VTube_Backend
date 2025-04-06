@@ -53,7 +53,7 @@ exports.sendOTP = async (req, res) => {
         console.log(otpBody);
 
         // Send OTP to user
-          await mailSender(email, "VTube - OTP Verification", `<p>Your OTP is: <strong>${otp}</strong>. It expires in 5 minutes.</p>`);
+        //   await mailSender(email, "VTube - OTP Verification", `<p>Your OTP is: <strong>${otp}</strong>. It expires in 5 minutes.</p>`);
 
         res.status(200).json({
             success: true,

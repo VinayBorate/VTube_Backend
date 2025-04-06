@@ -1,6 +1,7 @@
 
 const mongoose = require("mongoose")
 const mailSender = require('../utils/mailSender')
+const otpEmailTemplate = require('../utils/otpEmailTemplate');
 
 const OTPSchema = new mongoose.Schema({
     email:{
@@ -21,7 +22,8 @@ const OTPSchema = new mongoose.Schema({
 //function to send OTP email
 async function sendVerificationEmail(email,otp){
     try {
-        const mailResponse = await mailSender(email,"Verification Email from Vtube",otp);
+    const emailBody = otpEmailTemplate(otp);
+    const mailResponse = await mailSender(email, "Verification Email from VTube", emailBody);
         console.log(mailResponse);
 
     } catch (error) {
